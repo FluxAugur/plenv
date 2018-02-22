@@ -4,14 +4,14 @@ set -e
 CPANM_SHIM_PATH="$SHIM_PATH/cpanm"
 
 command -p cat > "$CPANM_SHIM_PATH" <<SH
-#!/usr/bin/env bash
+#!$(command -v bash)
 set -e
 [ -n "\$PLENV_DEBUG" ] && set -x
 
 program="\${0##*/}"
 
 export PLENV_ROOT="$PLENV_ROOT"
-"$(command -v plenv)" exec "\$program" "\$@"
+'$(command -v plenv)' exec "\$program" "\$@"
 rc=\$?
 for arg in \$@
 do
@@ -21,7 +21,7 @@ do
     ;;
   esac
 done
-"$(command -v plenv)" rehash
+'$(command -v plenv)' rehash
 exit \$rc
 SH
 
